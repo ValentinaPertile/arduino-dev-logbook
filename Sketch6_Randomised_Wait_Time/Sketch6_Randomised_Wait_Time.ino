@@ -47,9 +47,27 @@ void loop() {
   digitalWrite(buzzer, 1);
   delay(100);
   digitalWrite(buzzer, 0);
-  delay(random(900,4001));
+
+  //false start
+  long waitTime = random(900,4001);
+  long startTime = millis();
+
+  while (millis() - startTime < waitTime) {
+    if (digitalRead(button1) == 0){
+      falseStart(1);
+      return;
+    }
+
+    if (digitalRead(button2) == 0){
+      falseStart(2);
+      return;
+    }
+  }
+
   digitalWrite(redLED, 0);
 
+
+  //main game
   while(buttonPressed == 0){
 
     digitalWrite(LED1, 1);
@@ -62,6 +80,7 @@ void loop() {
       digitalWrite(LED1, 0);
     }
   }
+
   digitalWrite(buzzer, 1);
   delay(500);
   digitalWrite(buzzer, 0);
@@ -70,3 +89,52 @@ void loop() {
   digitalWrite(LED2, 0);
   buttonPressed = 0;
 }
+
+
+//False start function
+void falseStart(int player){
+
+  if (player == 1){
+    for(int i=0; i<3; i++){
+      digitalWrite(LED1, 1);
+      digitalWrite(buzzer, 1);
+      delay(100);
+
+      digitalWrite(buzzer,0);
+      digitalWrite(LED1, 0);
+      delay(100);
+    }
+    digitalWrite(LED2, 1); // gana jugador 2
+    digitalWrite(buzzer, 1);
+    delay(500);
+    digitalWrite(buzzer, 0);
+    delay(1500);
+  }
+
+  if (player == 2){
+    for(int i=0; i<3; i++){
+      digitalWrite(LED2, 1);
+      digitalWrite(buzzer, 1);
+      delay(100);
+
+      digitalWrite(buzzer,0);
+      digitalWrite(LED2, 0);
+      delay(100);
+    }
+    digitalWrite(LED1, 1);
+    digitalWrite(buzzer, 1);
+    delay(500);
+    digitalWrite(buzzer, 0);
+    delay(1500);
+  }
+
+  delay(1500);
+
+  digitalWrite(LED1, 0);
+  digitalWrite(LED2, 0);
+
+
+}
+
+
+
