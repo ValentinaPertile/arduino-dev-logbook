@@ -133,6 +133,8 @@ void falseStart(int player){
   digitalWrite(LED1, 0);
   digitalWrite(LED2, 0);
 
+  digitalWrite(redLED, 0);
+
 
 }
 
